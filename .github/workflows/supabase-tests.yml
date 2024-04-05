@@ -1,6 +1,10 @@
 name: "supabase-tests"
 on:
   push:
+    branches:
+      - '*'
+      - '*/*'
+      - '**'
 
 jobs:
   test_supabase:
