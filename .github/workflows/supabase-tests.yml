@@ -1,7 +1,6 @@
 name: "supabase-tests"
 on:
-  pull_request:
-  workflow_dispatch:
+  push:
 
 jobs:
   test_supabase:
