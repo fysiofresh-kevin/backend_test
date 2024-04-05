@@ -10,19 +10,19 @@ jobs:
   test_supabase:
     runs-on: ubuntu-latest
     env:
-      SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
       WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
       REEPAY_API_KEY: ${{ secrets.REEPAY_API_KEY }}
-      REEPAY_API_URL: ${{ vars.REEPAY_API_URL }}
-      DINERO_API_URL: ${{ vars.DINERO_API_URL }}
-      AUTH_DINERO_URL: ${{ vars.DINERO_API_URL }}
+      REEPAY_API_URL: ${{ secrets.REEPAY_API_URL }}
+      DINERO_API_URL: ${{ secrets.DINERO_API_URL }}
+      AUTH_DINERO_URL: ${{ secrets.DINERO_API_URL }}
       DINERO_ORG_ID: ${{ secrets.DINERO_ORG_ID }}
       DINERO_API_KEY: ${{ secrets.DINERO_API_KEY }}
       DINERO_CLIENT_ID: ${{ secrets.DINERO_CLIENT_ID }}
       DINERO_SECRET: ${{ secrets.DINERO_SECRET }}
-      TRANSFER_PROTOCOL: ${{vars.TRANSFER_PROTOCOL }}
+      TRANSFER_PROTOCOL: ${{secrets.TRANSFER_PROTOCOL }}
     steps:
       - uses: actions/checkout@v3
       - uses: supabase/setup-cli@v1
