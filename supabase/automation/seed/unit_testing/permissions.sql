@@ -1,0 +1,22 @@
+INSERT INTO permissions (permission)
+VALUES
+  ('appointment:read'),
+  ('appointment:write'),
+  ('appointment:delete'),
+  ('appointment:cancel'),
+  ('appointment:admin'),
+  ('invoices:read'),
+  ('invoices:write'),
+  ('invoices:admin'),
+  ('subscriptions:write'),
+  ('subscriptions:admin'),
+  ('journal:read'),
+  ('journal:write'),
+  ('journal:admin'),
+  ('organization:read'),
+  ('organization:write'),
+  ('organization:admin'),
+  ('site:navigation:clients'),
+  ('site:navigation:employees'),
+  ('site:navigation:services'),
+  ('site:navigation:invoices');

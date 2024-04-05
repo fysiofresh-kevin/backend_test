@@ -1,0 +1,61 @@
+name: 'Run Unit Tests'
+description: 'Runs Supabase unit tests'
+inputs:
+  path:
+    description: 'Path to the supabase directory'
+    required: true
+  SUPABASE_URL:
+    required: true
+  SUPABASE_ANON_KEY:
+    required: true
+  SUPABASE_SERVICE_ROLE_KEY:
+    required: true
+  WEBHOOK_SECRET:
+    required: true
+  REEPAY_API_KEY:
+    required: true
+  REEPAY_API_URL:
+    required: true
+  DINERO_API_URL:
+    required: true
+  AUTH_DINERO_URL:
+    required: true
+  DINERO_ORG_ID:
+    required: true
+  DINERO_API_KEY:
+    required: true
+  DINERO_CLIENT_ID:
+    required: true
+  DINERO_SECRET:
+    required: true
+  TRANSFER_PROTOCOL:
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: supabase/setup-cli@v1
+    - uses: denoland/setup-deno@v1
+    - run: |
+        cd ${{ github.workspace }}/${{ inputs.path }}/supabase/automation
+        python concat-ext-and-seed-files.unit.py
+      shell: bash
+    - run: |
+        cd ${{ inputs.path }}
+        npx supabase start
+        npx supabase test db
+        deno test --allow-env --config supabase/functions/deno.unit.json
+      shell: bash
+      env:
+        SUPABASE_URL: ${{ inputs.SUPABASE_URL }}
+        SUPABASE_ANON_KEY: ${{ inputs.SUPABASE_ANON_KEY }}
+        SUPABASE_SERVICE_ROLE_KEY: ${{ inputs.SUPABASE_SERVICE_ROLE_KEY }}
+        WEBHOOK_SECRET: ${{ inputs.WEBHOOK_SECRET }}
+        REEPAY_API_KEY: ${{ inputs.REEPAY_API_KEY }}
+        REEPAY_API_URL: ${{ inputs.REEPAY_API_URL }}
+        DINERO_API_URL: ${{ inputs.DINERO_API_URL }}
+        AUTH_DINERO_URL: ${{ inputs.DINERO_API_URL }}
+        DINERO_ORG_ID: ${{ inputs.DINERO_ORG_ID }}
+        DINERO_API_KEY: ${{ inputs.DINERO_API_KEY }}
+        DINERO_CLIENT_ID: ${{ inputs.DINERO_CLIENT_ID }}
+        DINERO_SECRET: ${{ inputs.DINERO_SECRET }}
+        TRANSFER_PROTOCOL: ${{ inputs.TRANSFER_PROTOCOL }}

@@ -1,0 +1,48 @@
+name: 'deploy'
+description: 'Deploys supabase'
+inputs:
+  path:
+    description: 'Path to the supabase directory'
+    required: true
+  SUPABASE_PROJECT_ID:
+    required: true
+  SUPABASE_ACCESS_TOKEN:
+    required: true
+  SUPABASE_PASSWORD:
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: supabase/setup-cli@v1
+      with:
+        version: latest
+
+    - name: start supabase
+      run: |
+        cd ${{inputs.path}}
+        supabase start
+      shell: bash
+
+    - name: Link DB
+      run: |
+        cd ${{inputs.path}}
+        supabase link --project-ref ${{ inputs.SUPABASE_PROJECT_ID}} --password ${{ inputs.SUPABASE_PASSWORD}}
+      shell: bash
+      env:
+        SUPABASE_ACCESS_TOKEN: ${{inputs.SUPABASE_ACCESS_TOKEN}}
+
+    - name: Push DB
+      run: |
+        cd ${{inputs.path}}
+        supabase db push --linked --password ${{ inputs.SUPABASE_PASSWORD }}
+      shell: bash
+      env:
+        SUPABASE_ACCESS_TOKEN: ${{inputs.SUPABASE_ACCESS_TOKEN}}
+
+    - name: Deploy Supabase functions
+      run: |
+        cd ${{inputs.path}}
+        supabase functions deploy --project-ref ${{ inputs.SUPABASE_PROJECT_ID}}
+      shell: bash
+      env:
+        SUPABASE_ACCESS_TOKEN: ${{inputs.SUPABASE_ACCESS_TOKEN}}

@@ -1,0 +1,16 @@
+name: 'Prepare for integration Tests'
+description: 'Runs concatenate python script for integration'
+inputs:
+  path:
+    description: 'Path to the supabase directory'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - uses: supabase/setup-cli@v1
+    - name: Prepare backend for integration testing
+      run: |
+        cd ${{ github.workspace }}/${{ inputs.path }}/supabase/automation
+        python concat-ext-and-seed-files.integration.py
+        supabase db reset
+      shell: bash

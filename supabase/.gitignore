@@ -1,0 +1,14 @@
+# Supabase
+.branches
+.temp
+.env
+
+# Tests
+coverage
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
+
+# Automation
+__pycache__
